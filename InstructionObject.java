@@ -8,14 +8,17 @@ public class InstructionObject {
 	public InstructionObject(String instr) {
 		String[] myLine = instr.split(" ");
 		// Checks to make sure instruction is the required length
+		myLine[0] = myLine[0].toLowerCase();
 		if ((myLine.length != 4 && myLine[0].equals("write"))
 				|| (myLine.length != 3 && myLine[0].equals("read"))
-				|| (myLine.length != 3 && myLine[0].equals("create"))) {
+				|| (myLine.length != 3 && myLine[0].equals("create"))
+				|| (myLine.length != 3 && myLine[0].equals("destroy"))) {
 			this.instruction = "BAD";
 			// Checks to see if the first word is 'read' or 'write'
 		} else if (myLine[0].equals("read") == false
 				&& myLine[0].equals("write") == false
-				&& myLine[0].equals("create") == false) {
+				&& myLine[0].equals("create") == false
+				&& myLine[0].equals("destroy") == false) {
 			this.instruction = "BAD";
 			// Checks if the passed subject is in the subject manager
 		} else if (!SecureSystem.getSubjectManager().containsKey(myLine[1])) {
@@ -27,10 +30,13 @@ public class InstructionObject {
 			// Checks that the last string in a write instruction is an int
 		} else if (myLine[2].equals("write") && !isInteger(myLine[3])) {
 			this.instruction = "BAD";
-			// Otherwise, read is safe and sent to reference monitor
+		} else if (myLine[0].equals("destroy")
+				&& !ObjectManager.getObjectManager().containsKey(myLine[2])) {
+			this.instruction = "BAD";
 		} else if (myLine[0].equals("create")
 				&& ObjectManager.getObjectManager().containsKey(myLine[2])) {
 			this.instruction = "BAD";
+			// Otherwise, read is safe and sent to reference monitor
 		} else if (myLine[0].equals("read")) {
 			this.instruction = "READ";
 			this.subject = myLine[1];
@@ -48,7 +54,12 @@ public class InstructionObject {
 			this.subject = myLine[1];
 			this.object = myLine[2];
 			ReferenceMonitor.createExecute(getInstructionObject());
-		}
+		} else if (myLine[0].equals("destroy")) {
+			this.instruction = "DESTROY";
+			this.subject = myLine[1];
+			this.object = myLine[2];
+			ReferenceMonitor.destroyExecute(getInstructionObject());
+		} 
 	}
 
 	// Returns the instruction object

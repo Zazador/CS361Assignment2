@@ -52,5 +52,22 @@ public class ReferenceMonitor {
 		SecurityLevel subjSec = SecureSystem.getSubjectManager().get(subj);
 		createNewObject(instr.getObject(), subjSec);
 	}
+	
+	static void destroyExecute(InstructionObject instr) {
+		String subj = instr.getSubject();
+		String obj = instr.getObject();
+
+		SecurityLevel subjSec = SecureSystem.getSubjectManager().get(subj);
+		int subjSecLevel = subjSec.getDomination();
+
+		SecurityLevel objSec = ObjectManager.getObjectManager().get(obj);
+		int objSecLevel = objSec.getDomination();
+
+		if (subjSecLevel <= objSecLevel) {
+			ObjectManager.destroyExecute(instr);
+		} else {
+			System.out.println("This destroy call is invalid and did not occur!");
+		}
+	}
 
 }

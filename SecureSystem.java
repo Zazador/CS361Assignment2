@@ -113,6 +113,30 @@ public class SecureSystem {
 			System.out.println("   Hal has recently read: "
 					+ ObjectManager.getReadManager().get("Hal"));
 			System.out.println();
+			System.out.println("The current ObjectManager is: ");
+			for (String name: ObjectManager.getObjectManager().keySet()) {
+				int value = ObjectManager.getObjectManager().get(name).getDomination();
+				System.out.println(name + " " + value);
+			}
+		} else if (instrobj.getInstruction().equals("DESTROY")) {
+			System.out.println(instrobj.getSubject() + " destroys object "
+					+ instrobj.getObject());
+			System.out.println("The current state is: ");
+			System.out.println("   LObj has value: "
+					+ ObjectManager.getValueManager().get("LObj"));
+			System.out.println("   HObj has value: "
+					+ ObjectManager.getValueManager().get("HObj"));
+			System.out.println("   Lyle has recently read: "
+					+ ObjectManager.getReadManager().get("Lyle"));
+			System.out.println("   Hal has recently read: "
+					+ ObjectManager.getReadManager().get("Hal"));
+			System.out.println();
+			System.out.println("The current ObjectManager is: ");
+			for (String name: ObjectManager.getObjectManager().keySet()) {
+				int value = ObjectManager.getObjectManager().get(name).getDomination();
+				System.out.println(name + " " + value);
+			}
 		}
+		System.out.println();
 	}
 }

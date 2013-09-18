@@ -35,6 +35,11 @@ public class ObjectManager {
 
 		valueManager.put(obj, val);
 	}
+	
+	static void destroyExecute(InstructionObject instr) {
+		String obj = instr.getObject();
+		objectManager.remove(obj);
+	}
 
 	// Only reaches here after being verified by the Reference Monitor that the
 	// instruction is valid, then executes the read instruction
