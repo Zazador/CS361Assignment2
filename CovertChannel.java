@@ -20,6 +20,8 @@ public class CovertChannel {
 		// each line
 		Scanner scan = new Scanner(file2);
 		String fileName = file2.getName() + ".out";
+		byte[] newLine = System.getProperty("line.separator").getBytes();
+		FileOutputStream fos = new FileOutputStream(fileName);
 		while (scan.hasNextLine()) {
 			String curLine = scan.nextLine();
 			byte[] buf = curLine.getBytes();
@@ -27,7 +29,7 @@ public class CovertChannel {
 			ByteArrayInputStream input = new ByteArrayInputStream(buf);
 			int numOfBytes = input.available();
 			
-			StringBuilder build = new StringBuilder();
+
 
 			while (numOfBytes > 0) {
 				int inputByte = input.read();
@@ -56,19 +58,15 @@ public class CovertChannel {
 					}
 				}
 				numOfBytes--;
-				build.append(ReferenceMonitor.getResultLine());
+				String result = ReferenceMonitor.getResultLine();
+				byte[] resultArray = result.getBytes();
+				fos.write(resultArray);
 				ReferenceMonitor.getRunManager().put("LYLE", "temp");
 			}
-			String result = build.toString();
-			System.out.println(result);
-			byte[] resultArray = result.getBytes();
-			FileOutputStream fos = new FileOutputStream(fileName);
-			fos.write(resultArray);
-			fos.close();
-
-
+			fos.write(newLine);
 		}
 		scan.close();
+		fos.close();
 	}
 
 }
