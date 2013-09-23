@@ -7,30 +7,15 @@ public class SecureSystem {
 	ReferenceMonitor refMon = new ReferenceMonitor();
 	static InstructionObject instrobj;
 	static HashMap<String, SecurityLevel> subjectManager = new HashMap<String, SecurityLevel>();
-
-	public static void main(String[] args) throws FileNotFoundException {
-
-		// Create the SecureSystem and take in the passed txt file
-		SecureSystem sys = new SecureSystem(args[0]);
-		File file2 = new File(args[0]);
-
-		// Create low and high Security Levels
-		SecurityLevel low = SecurityLevel.LOW;
-		SecurityLevel high = SecurityLevel.HIGH;
-
-		// Create Lyle and Hal
-		sys.createSubject("Lyle", low);
-		sys.createSubject("Hal", high);
-
+	
+	static void passInstructions(String[] instructions){
 		// Parse the passed txt file until end, while printing the state after
 		// each line
-		Scanner scan = new Scanner(file2);
-		while (scan.hasNextLine()) {
-			String curLine = scan.nextLine();
-			instrobj = new InstructionObject(curLine);
-			printState();
+		for (int i = 0; i < instructions.length; i++) {
+//			System.out.println("Passing instruction: " + instructions[i]);
+			instrobj = new InstructionObject(instructions[i]);
+			//printState();
 		}
-		scan.close();
 	}
 
 	// SecureSystem constructor

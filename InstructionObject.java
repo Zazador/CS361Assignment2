@@ -9,16 +9,22 @@ public class InstructionObject {
 		String[] myLine = instr.split(" ");
 		// Checks to make sure instruction is the required length
 		myLine[0] = myLine[0].toLowerCase();
-		if ((myLine.length != 4 && myLine[0].equals("write"))
+		if (myLine[0].equals("run")) {
+			this.instruction = "RUN";
+			this.subject = myLine[1];
+			ReferenceMonitor.runExecute(getInstructionObject());
+		} else if ((myLine.length != 4 && myLine[0].equals("write"))
 				|| (myLine.length != 3 && myLine[0].equals("read"))
 				|| (myLine.length != 3 && myLine[0].equals("create"))
-				|| (myLine.length != 3 && myLine[0].equals("destroy"))) {
+				|| (myLine.length != 3 && myLine[0].equals("destroy"))
+				|| (myLine.length != 2 && myLine[0].equals("run"))) {
 			this.instruction = "BAD";
 			// Checks to see if the first word is 'read' or 'write'
 		} else if (myLine[0].equals("read") == false
 				&& myLine[0].equals("write") == false
 				&& myLine[0].equals("create") == false
-				&& myLine[0].equals("destroy") == false) {
+				&& myLine[0].equals("destroy") == false
+				&& myLine[0].equals("run") == false) {
 			this.instruction = "BAD";
 			// Checks if the passed subject is in the subject manager
 		} else if (!SecureSystem.getSubjectManager().containsKey(myLine[1])) {
@@ -42,7 +48,6 @@ public class InstructionObject {
 			this.subject = myLine[1];
 			this.object = myLine[2];
 			ReferenceMonitor.readExecute(getInstructionObject());
-			// Otherwise, write is safe and sent to reference monitor
 		} else if (myLine[0].equals("write")) {
 			this.instruction = "WRITE";
 			this.subject = myLine[1];
@@ -59,7 +64,7 @@ public class InstructionObject {
 			this.subject = myLine[1];
 			this.object = myLine[2];
 			ReferenceMonitor.destroyExecute(getInstructionObject());
-		} 
+		}
 	}
 
 	// Returns the instruction object
