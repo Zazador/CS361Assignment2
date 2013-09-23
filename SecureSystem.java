@@ -22,10 +22,6 @@ public class SecureSystem {
 		sys.createSubject("Lyle", low);
 		sys.createSubject("Hal", high);
 
-		// Create LObj and HObj
-		sys.getReferenceMonitor().createNewObject("LObj", low);
-		sys.getReferenceMonitor().createNewObject("HObj", high);
-
 		// Parse the passed txt file until end, while printing the state after
 		// each line
 		Scanner scan = new Scanner(file2);
