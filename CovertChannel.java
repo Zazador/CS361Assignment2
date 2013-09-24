@@ -2,6 +2,8 @@ import java.io.*;
 import java.util.*;
 
 public class CovertChannel {
+	
+	static long numOfBits = 0;
 
 	public static void main(String[] args) throws IOException {
 		// Create the SecureSystem and take in the passed txt file
@@ -22,6 +24,7 @@ public class CovertChannel {
 		String fileName = file2.getName() + ".out";
 		byte[] newLine = System.getProperty("line.separator").getBytes();
 		FileOutputStream fos = new FileOutputStream(fileName);
+		final long startTime = System.currentTimeMillis();
 		while (scan.hasNextLine()) {
 			String curLine = scan.nextLine();
 			byte[] buf = curLine.getBytes();
@@ -35,6 +38,7 @@ public class CovertChannel {
 				int inputByte = input.read();
 				String inputBit = Integer.toBinaryString(inputByte);
 				int inputLength = inputBit.length();
+				numOfBits += 8;
 
 				if (inputLength != 8) {
 					while (inputLength != 8) {
@@ -65,6 +69,12 @@ public class CovertChannel {
 			}
 			fos.write(newLine);
 		}
+		final long endTime = System.currentTimeMillis();
+		double bits = file2.length();
+		long bandwidth = (numOfBits * 8) / (endTime - startTime);
+		System.out.println("Document: " + file2.getName());
+		System.out.println("Size: " + bits + " bytes");
+		System.out.println("Bandwidth: " + bandwidth + " bits/ms");
 		scan.close();
 		fos.close();
 	}
