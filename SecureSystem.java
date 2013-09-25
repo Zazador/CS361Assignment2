@@ -7,22 +7,20 @@ public class SecureSystem {
 	ReferenceMonitor refMon = new ReferenceMonitor();
 	static InstructionObject instrobj;
 	static HashMap<String, SecurityLevel> subjectManager = new HashMap<String, SecurityLevel>();
-	
-	static void passInstructions(String[] instructions){
+
+	static void passInstructions(String[] instructions) {
 		// Parse the passed txt file until end, while printing the state after
 		// each line
 		for (int i = 0; i < instructions.length; i++) {
-//			System.out.println("Passing instruction: " + instructions[i]);
+			// System.out.println("Passing instruction: " + instructions[i]);
 			instrobj = new InstructionObject(instructions[i]);
-			//printState();
+			// printState();
 		}
 	}
 
 	// SecureSystem constructor
 	public SecureSystem(String fileName) throws FileNotFoundException {
-		File file1 = new File(fileName);
-		System.out.println("Reading from file: " + file1);
-		System.out.println();
+
 	}
 
 	// Constructor for a subject manager
@@ -95,8 +93,9 @@ public class SecureSystem {
 					+ ObjectManager.getReadManager().get("Hal"));
 			System.out.println();
 			System.out.println("The current ObjectManager is: ");
-			for (String name: ObjectManager.getObjectManager().keySet()) {
-				int value = ObjectManager.getObjectManager().get(name).getDomination();
+			for (String name : ObjectManager.getObjectManager().keySet()) {
+				int value = ObjectManager.getObjectManager().get(name)
+						.getDomination();
 				System.out.println(name + " " + value);
 			}
 		} else if (instrobj.getInstruction().equals("DESTROY")) {
@@ -113,8 +112,9 @@ public class SecureSystem {
 					+ ObjectManager.getReadManager().get("Hal"));
 			System.out.println();
 			System.out.println("The current ObjectManager is: ");
-			for (String name: ObjectManager.getObjectManager().keySet()) {
-				int value = ObjectManager.getObjectManager().get(name).getDomination();
+			for (String name : ObjectManager.getObjectManager().keySet()) {
+				int value = ObjectManager.getObjectManager().get(name)
+						.getDomination();
 				System.out.println(name + " " + value);
 			}
 		}
